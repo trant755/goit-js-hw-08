@@ -9,14 +9,11 @@ form.addEventListener('submit', submitForm);
 
 let saveData = {};
 
-function saveInput(e) {
-  if (e.target.name === 'email') {
-    saveData.email = e.target.value;
-  }
+returnSaveValue();
 
-  if (e.target.name === 'message') {
-    saveData.message = e.target.value;
-  }
+function saveInput(e) {
+  saveData[e.target.name] = e.target.value;
+
   localStorage.setItem('feedback-form-state', JSON.stringify(saveData));
 }
 
@@ -25,15 +22,22 @@ function submitForm(ev) {
 
   console.log(saveData);
   saveData = {};
+
   ev.target.reset();
   localStorage.removeItem('feedback-form-state');
 }
 
-const feedbackData = JSON.parse(localStorage.getItem('feedback-form-state'));
+function returnSaveValue() {
+  const feedbackData = JSON.parse(localStorage.getItem('feedback-form-state'));
 
-if (feedbackData?.email) {
-  emailInput.value = feedbackData.email;
-}
-if (feedbackData?.message) {
-  messageInput.value = feedbackData.message;
+  if (feedbackData?.email) {
+    emailInput.value = feedbackData.email;
+  }
+  if (feedbackData?.message) {
+    messageInput.value = feedbackData.message;
+  }
+
+  if (feedbackData) {
+    saveData = feedbackData;
+  }
 }
