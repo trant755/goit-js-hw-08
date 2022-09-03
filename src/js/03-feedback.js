@@ -7,7 +7,7 @@ const messageInput = document.querySelector('[name = message]');
 form.addEventListener('input', throttle(saveInput, 500));
 form.addEventListener('submit', submitForm);
 
-const saveData = {};
+let saveData = {};
 
 function saveInput(e) {
   if (e.target.name === 'email') {
@@ -24,7 +24,7 @@ function submitForm(ev) {
   ev.preventDefault();
 
   console.log(saveData);
-
+  saveData = {};
   ev.target.reset();
   localStorage.removeItem('feedback-form-state');
 }
